@@ -4,7 +4,7 @@ let currentId = "089ef556-dfff-4ff2-9733-654645be56fe";
 
 let idMap = { "089ef556-dfff-4ff2-9733-654645be56fe": 1 };
 
-let totalNumberOfNodes = 1;
+let totalUniqueNodes = 1;
 let mostUsedId = "089ef556-dfff-4ff2-9733-654645be56fe";
 let timesUsed = 1;
 
@@ -16,10 +16,9 @@ const callApiAndRecordIds = (id) => {
       if (res.data[0].child_node_ids !== []) {
         for (let id of res.data[0].child_node_ids) {
           // keep track of the total of nodes used
-          ++totalNumberOfNodes;
-          //   update the map of id's and times they were used
-          idMap[id] = ++idMap[id] || 1;
-
+          // update the map of id's and times they were used
+          // also updates unique node count if current id is unique
+          idMap[id] = ++idMap[id] || (1 && ++totalUniqueNodes);
           //   logic pull the most used id and times it was used
           if (idMap[id] > timesUsed) {
             timesUsed = idMap[id];
@@ -28,12 +27,11 @@ const callApiAndRecordIds = (id) => {
           callApiAndRecordIds(id);
         }
       }
+    })
+    .then(() => {
+      console.log("total unique nodes", totalUniqueNodes);
+      console.log("most used id", mostUsedId);
     });
-  // helper to log the results
-  // .then(() => {
-  //   console.log("total nodes", totalNumberOfNodes);
-  //   console.log("most used id", mostUsedId);
-  // });
 };
 
 // Answers
