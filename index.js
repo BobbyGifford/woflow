@@ -4,7 +4,6 @@ let currentId = "089ef556-dfff-4ff2-9733-654645be56fe";
 
 let idMap = { "089ef556-dfff-4ff2-9733-654645be56fe": 1 };
 
-let totalUniqueNodes = 1;
 let mostUsedId = "089ef556-dfff-4ff2-9733-654645be56fe";
 let timesUsed = 1;
 
@@ -17,8 +16,7 @@ const callApiAndRecordIds = (id) => {
         for (let id of res.data[0].child_node_ids) {
           // keep track of the total of nodes used
           // update the map of id's and times they were used
-          // also updates unique node count if current id is unique
-          idMap[id] = ++idMap[id] || (1 && ++totalUniqueNodes);
+          idMap[id] = ++idMap[id] || 1;
           //   logic pull the most used id and times it was used
           if (idMap[id] > timesUsed) {
             timesUsed = idMap[id];
@@ -29,7 +27,9 @@ const callApiAndRecordIds = (id) => {
       }
     })
     .then(() => {
-      console.log("total unique nodes", totalUniqueNodes);
+      console.log(idMap);
+      //   return keys in idMap for unique node count
+      console.log("total unique nodes", Object.keys(idMap).length);
       console.log("most used id", mostUsedId);
     });
 };
