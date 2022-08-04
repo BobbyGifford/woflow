@@ -27,7 +27,6 @@ const callApiAndRecordIds = (id) => {
       }
     })
     .then(() => {
-      console.log(idMap);
       //   return keys in idMap for unique node count
       console.log("total unique nodes", Object.keys(idMap).length);
       console.log("most used id", mostUsedId);
